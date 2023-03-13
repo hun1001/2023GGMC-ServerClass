@@ -6,7 +6,7 @@ namespace Server;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         using (Socket serverSocket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
         {
@@ -18,8 +18,8 @@ internal class Program
 
             while (true)
             {
-                Socket clientSocket = serverSocket.Accept();
-                Console.WriteLine("Client connected " + clientSocket.RemoteEndPoint.ToString());
+                Socket clientSocket = await serverSocket.AcceptAsync();
+                Console.WriteLine("Client connected " + clientSocket.RemoteEndPoint.ToString()); 
 
                 Thread t = new(() =>
                 {
