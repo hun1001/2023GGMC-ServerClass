@@ -14,30 +14,33 @@ internal class Program
 
             serverSocket.Bind(endPoint);
 
-            serverSocket.Listen(20);
+            serverSocket.Listen(1000);
 
             while (true)
             {
-                using (Socket clientSocket = serverSocket.Accept())
+                Socket clientSocket = serverSocket.Accept();
+                Console.WriteLine("Client connected " + clientSocket.RemoteEndPoint.ToString());
+
+                Thread t = new(() =>
                 {
-                    Console.WriteLine("Client connected " + clientSocket.RemoteEndPoint.ToString());
-
-                    byte[] buffer = new byte[256];
-                    int totalByte = clientSocket.Receive(buffer);
-
-                    if (totalByte < 1)
+                    while (true)
                     {
-                        Console.WriteLine("Connection closed");
-                        return;
+                        byte[] buffer = new byte[256];
+                        int totalByte = clientSocket.Receive(buffer);
+
+                        if (totalByte < 1)
+                        {
+                            clientSocket.Dispose();
+                            break;
+                        }
                     }
+                });
 
-                    string str = Encoding.UTF8.GetString(buffer, 0, totalByte);
-                    Console.WriteLine("Client: " + str);
+                //string str = Encoding.UTF8.GetString(buffer, 0, totalByte);
+                //Console.WriteLine("Client: " + str);
 
-                    clientSocket.Send(buffer);
-                }
+                //clientSocket.Send(buffer);
             }
         }
-
     }
 }
