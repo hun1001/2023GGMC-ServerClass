@@ -39,7 +39,7 @@ internal class Singleton
 
     public async Task ConnectAsync()
     {
-        IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("192.168.200.120"), 20000);
+        IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 20000);
         await Socket.ConnectAsync(endPoint);
         ThreadPool.QueueUserWorkItem(ReceiveAsync, Socket);
     }
