@@ -13,15 +13,25 @@ internal class Program
     
     private static void Main(string[] args)
     {
-        Thread t = new Thread(MainThread);
-        // 쓰레드의 이름 지정
-        t.Name = "TestThread";
-        // 쓰레드 뒤에서만 실행하냐 앞에서도 하냐 차이 보여주는 거라고 하심
-        t.IsBackground = true;
-        
-        t.Start();
-        
-        Console.WriteLine("Hello world!");
-        t.Join();
+        // 알아서 쓰레드 만들어서 실행시켜주는 거
+        ThreadPool.SetMinThreads(1, 1);
+        ThreadPool.SetMaxThreads(5, 5);
+
+        for (int i = 0; i < 5; ++i)
+        {
+            ThreadPool.QueueUserWorkItem((o) =>
+            {
+                while (true)
+                {
+
+                }
+            });
+        }
+        ThreadPool.QueueUserWorkItem((o) => MainThread());
+
+        while (true)
+        {
+            
+        }
     }
 }
