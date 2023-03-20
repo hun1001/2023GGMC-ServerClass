@@ -3,31 +3,33 @@ using System.Threading;
 
 internal class Program
 {
+    // volatile 키워드는 컴퓨터한테 건드리지 말라는 키워드
+    volatile static bool _stop = false;
+
     static void MainThread()
     {
-        for (int i = 0; i < 10; ++i)
+        Console.WriteLine("쓰레드 시작!");
+
+        while(!_stop)
         {
-            Console.WriteLine("Hello thread!");
+
         }
     }
     
     private static void Main(string[] args)
     {
-        // 알아서 쓰레드 만들어서 실행시켜주는 거
-        ThreadPool.SetMinThreads(1, 1);
-        ThreadPool.SetMaxThreads(5, 5);
+        Task t = new Task(MainThread);
+        t.Start();
 
-        for (int i = 0; i < 5; ++i)
-        {
-            Task t = new Task(() => { while (true) { } }, TaskCreationOptions.LongRunning);
-            t.Start();
-        }
+        Thread.Sleep(1000);
 
-        ThreadPool.QueueUserWorkItem((o) => MainThread());
+        _stop = true;
 
-        while (true)
-        {
-            
-        }
+        Console.WriteLine("stop 호출"); 
+        Console.WriteLine("종료 대기중");
+
+        t.Wait();
+
+        Console.WriteLine("종료 성공");
     }
 }
