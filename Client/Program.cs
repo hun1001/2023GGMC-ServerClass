@@ -19,14 +19,10 @@ internal class Program
 
         for (int i = 0; i < 5; ++i)
         {
-            ThreadPool.QueueUserWorkItem((o) =>
-            {
-                while (true)
-                {
-
-                }
-            });
+            Task t = new Task(() => { while (true) { } }, TaskCreationOptions.LongRunning);
+            t.Start();
         }
+
         ThreadPool.QueueUserWorkItem((o) => MainThread());
 
         while (true)
