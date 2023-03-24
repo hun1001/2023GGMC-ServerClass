@@ -1,53 +1,37 @@
-﻿using System.Net;
-using System.Net.Sockets;
-using System.Text;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Client;
-
-internal class Program
+class Program
 {
-    private static void Main(string[] args)
+
+    // [][][][][] [][][][][] [][][][][] [][][][][] [][][][][]
+    static void Main(string[] args)
     {
-        using Socket clientSocket = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        IPEndPoint endPoint = new(IPAddress.Parse("127.0.0.1"), 5000);
+        int[,] arr = new int[10000, 10000];
 
-        bool isError = false;
-
-        try
+        long now = DateTime.Now.Ticks;
+        for (int y = 0; y < 10000; y++)
         {
-            clientSocket.Connect(endPoint);
-        }
-        catch
-        {
-            isError = true;
-        }
-
-        Console.WriteLine(isError ? "Connect Fail" : "Connect Succes");
-
-        while (true)
-        {
-            string str = Console.ReadLine();
-
-            if (str == "/exit")
+            for (int x = 0; x < 10000; x++)
             {
-                return;
+                arr[y, x] = 1;
             }
-
-            byte[] buffer = Encoding.UTF8.GetBytes(str);
-            clientSocket.Send(buffer);
-
-            var buffer2 = new byte[256];
-            int bytesRead = clientSocket.Receive(buffer2);
-
-            if(bytesRead < 1)
-            {
-                Console.WriteLine("Server Connect End");
-                return;
-            }
-
-            string str2 = Encoding.UTF8.GetString(buffer2);
-            Console.WriteLine($"R: {str2}");
         }
+        long end = DateTime.Now.Ticks;
+        Console.WriteLine(end - now);
+
+
+        now = DateTime.Now.Ticks;
+        for (int y = 0; y < 10000; y++)
+        {
+            for (int x = 0; x < 10000; x++)
+            {
+                arr[x, y] = 1;
+            }
+        }
+        end = DateTime.Now.Ticks;
+        Console.WriteLine(end - now);
     }
 }
