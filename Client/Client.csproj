@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="Cache.cs" />
+    <Compile Remove="InterLocked.cs" />
     <Compile Remove="MemBarrier.cs" />
   </ItemGroup>
 
