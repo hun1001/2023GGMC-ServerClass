@@ -6,7 +6,7 @@
     {
         for (int i = 0; i < 100000; i++)
         {
-            number++;
+            Interlocked.Increment(ref number);
         }
     }
 
@@ -14,7 +14,7 @@
     {
         for (int i = 0; i < 100000; i++)
         {
-            number--;
+            Interlocked.Decrement(ref number);
         }
     }
 
