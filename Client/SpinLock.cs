@@ -1,19 +1,18 @@
 ﻿class SpinLock // Lock이 풀릴 때 까지 돌아가는 존버메타
 {
-    volatile bool _locked = false;
+    volatile int _locked = 0;
 
     public void Acquire()
     {
-        while(_locked)
+        while (!(Interlocked.CompareExchange(ref _locked, 1, 0) == 0))
         {
-
+            
         }
-        _locked = true;
     }
 
     public void Release()
     {
-        _locked = false;
+        Interlocked.Exchange(ref _locked, 0);
     }
 }
 
@@ -26,11 +25,11 @@ class Program
     {
         for (int i = 0; i < 10000; i++)
         {
-            _lock.Acquire();
+            _lock.Acquire();    // 락 시작!
 
             number++;
 
-            _lock.Release();
+            _lock.Release();    // 락 끝!
         }
     }
 
