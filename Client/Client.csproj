@@ -9,10 +9,16 @@
 
   <ItemGroup>
     <Compile Remove="Cache.cs" />
+    <Compile Remove="DeadLock.cs" />
     <Compile Remove="InterLocked.cs" />
     <Compile Remove="Lock.cs" />
     <Compile Remove="MemBarrier.cs" />
     <Compile Remove="Monitor.cs" />
+    <Compile Remove="SpinLock.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="SpinLock.cs" />
   </ItemGroup>
 
 </Project>
