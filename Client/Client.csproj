@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="Cache.cs" />
+    <Compile Remove="ContextSwitch_RandomMeta.cs" />
     <Compile Remove="DeadLock.cs" />
     <Compile Remove="InterLocked.cs" />
     <Compile Remove="Lock.cs" />
