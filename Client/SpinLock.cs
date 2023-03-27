@@ -1,23 +1,24 @@
 ﻿class SpinLock // Lock이 풀릴 때 까지 돌아가는 존버메타
-
 {
     volatile bool _locked = false;
 
     public void Acquire()
     {
+        while(_locked)
+        {
 
+        }
+        _locked = true;
     }
 
     public void Release()
     {
-
+        _locked = false;
     }
 }
 
 class Program
 {
-
-
     static int number = 0;
     static SpinLock _lock = new SpinLock();
 
