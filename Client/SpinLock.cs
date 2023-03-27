@@ -1,62 +1,62 @@
-class SpinLock // LockÀÌ Ç®¸± ¶§ ±îÁö µ¹¾Æ°¡´Â Á¸¹ö¸ŞÅ¸
+ï»¿class SpinLock // Lockì´ í’€ë¦´ ë•Œ ê¹Œì§€ ëŒì•„ê°€ëŠ” ì¡´ë²„ë©”íƒ€
 
 {
-	volatile bool _locked = false;
+    volatile bool _locked = false;
 
-	public void Acquire()
-	{
+    public void Acquire()
+    {
 
-	}
+    }
 
-	public void Release()
-	{
+    public void Release()
+    {
 
-	}
+    }
 }
 
 class Program
 {
 
 
-	static int number = 0;
-	static SpinLock _lock = new SpinLock();
+    static int number = 0;
+    static SpinLock _lock = new SpinLock();
 
-	static void Thread_1()
-	{
-		for (int i = 0; i < 10000; i++)
-		{
-			_lock.Acquire();
+    static void Thread_1()
+    {
+        for (int i = 0; i < 10000; i++)
+        {
+            _lock.Acquire();
 
-			number++;
+            number++;
 
-			_lock.Release();
-		}
-	}
+            _lock.Release();
+        }
+    }
 
-	static void Thread_2()
-	{
+    static void Thread_2()
+    {
 
-		for (int i = 0; i < 10000; i++)
-		{
-			_lock.Acquire();
+        for (int i = 0; i < 10000; i++)
+        {
+            _lock.Acquire();
 
-			number--;
+            number--;
 
-			_lock.Release();
-		}
-	}
+            _lock.Release();
+        }
+    }
 
-	static void Main(string[] args)
-	{
-		Task t1 = new Task(Thread_1);
-		Task t2 = new Task(Thread_2);
+    static void Main(string[] args)
+    {
+        Task t1 = new Task(Thread_1);
+        Task t2 = new Task(Thread_2);
 
-		t1.Start();
-		t2.Start();
+        t1.Start();
+        t2.Start();
 
-		Task.WaitAll(t1, t2);
+        Task.WaitAll(t1, t2);
 
-		Console.WriteLine(number);
+        Console.WriteLine(number);
 
-	}
+    }
 }
