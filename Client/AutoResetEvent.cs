@@ -25,7 +25,7 @@ namespace ServerCore
     class Program
     {
 
-
+        // 온라인 게임에서는 부적절 겁~나 느림
         static int number = 0;
         static Lock _lock = new Lock();
 
